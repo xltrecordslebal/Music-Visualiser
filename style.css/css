@@ -1,57 +1,90 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-body {
-  font-family: Arial, sans-serif;
-  background-color: #0e0e10;
-  color: white;
+
+body, html {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  font-family: 'Arial', sans-serif;
   overflow: hidden;
-  text-align: center;
+  position: relative;
 }
-#app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  padding: 20px;
-}
-canvas {
+
+#visualizer {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 0;
+  width: 100%;
+  height: 100%;
 }
-.content {
+
+#app {
   position: relative;
   z-index: 1;
-  max-width: 400px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
   padding: 20px;
+  color: white;
+  text-align: center;
 }
+
+.content {
+  max-width: 320px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
 .cover-img {
   width: 100%;
+  height: auto;
   border-radius: 12px;
-  animation: moveBackground 20s infinite alternate ease-in-out;
+  margin-bottom: 12px;
 }
-@keyframes moveBackground {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.05); }
-}
-.title, .artist {
-  margin: 10px 0;
+
+.title {
+  font-size: 1.5rem;
   font-weight: bold;
-  font-size: 1.2em;
+  margin: 10px 0;
 }
-.badges img {
-  width: 30px;
-  margin: 5px;
+
+.artist {
+  font-size: 1rem;
+  color: #aaa;
+  margin-bottom: 10px;
 }
-input, label {
+
+input[type="file"], input[type="text"] {
   display: block;
   margin: 10px auto;
-  color: white;
+  width: 100%;
+  padding: 8px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: none;
+}
+
+audio {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.badges {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.badges img {
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) invert(1);
 }
