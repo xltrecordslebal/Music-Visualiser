@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music Visualizer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="visualizer"></canvas>
+  <div id="app">
+    <div class="content">
+      <input type="file" id="coverInput" accept="image/*">
+      <input type="file" id="audioInput" accept="audio/*">
+      <input type="text" id="titleInput" placeholder="Song Title" />
+      <input type="text" id="artistInput" placeholder="Artist Name" />
+      <img id="cover" class="cover-img" src="assets/default-cover.jpg" alt="Cover Art" />
+      <div class="title" id="songTitle"></div>
+      <div class="artist" id="artistName"></div>
+      <audio id="audio" controls></audio>
+      <div class="badges">
+        <img src="assets/badge-apple.svg" alt="Apple Music">
+        <img src="assets/badge-youtube.svg" alt="YouTube Music">
+        <img src="assets/badge-spotify.svg" alt="Spotify">
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
