@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FUNK DE COMPANIA - Music Release</title>
+  <title>Music Release Visualizer</title>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
       margin: 0;
@@ -16,68 +15,46 @@
     body {
       font-family: 'Anton', sans-serif;
       background: linear-gradient(135deg, #0c0c1d 0%, #1a1a3a 100%);
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       color: white;
-      overflow: hidden;
       position: relative;
-    }
-
-    .background-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 30%, rgba(106, 27, 154, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(33, 150, 243, 0.15) 0%, transparent 40%);
-      z-index: -1;
-    }
-
-    .vinyl-texture {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%),
-        repeating-radial-gradient(circle, transparent, transparent 2px, rgba(0,0,0,0.1) 3px, rgba(0,0,0,0.1) 4px);
-      z-index: -1;
-    }
-
-    .glow {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      background: radial-gradient(circle at center, rgba(106, 27, 154, 0.3) 0%, transparent 70%);
-      z-index: -1;
+      overflow-x: hidden;
+      padding: 20px;
     }
 
     .container {
-      width: 90%;
-      max-width: 800px;
-      text-align: center;
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
       position: relative;
       z-index: 10;
-      padding: 40px;
-      background: rgba(10, 10, 25, 0.7);
+    }
+
+    /* Display Panel - Replica of 1000139706.jpg */
+    .display-panel {
+      flex: 1;
+      min-width: 500px;
+      background: rgba(10, 10, 25, 0.85);
       border-radius: 20px;
+      padding: 40px;
       box-shadow: 
         0 10px 30px rgba(0, 0, 0, 0.7),
         inset 0 0 20px rgba(106, 27, 154, 0.3);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(106, 27, 154, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
     .title {
-      font-size: 5rem;
+      font-size: 4.5rem;
       text-transform: uppercase;
       letter-spacing: 8px;
       margin-bottom: 10px;
@@ -85,18 +62,7 @@
       text-shadow: 
         0 0 15px rgba(255, 255, 255, 0.8),
         0 0 30px rgba(106, 27, 154, 0.8);
-      position: relative;
       line-height: 1.1;
-    }
-
-    .title::after {
-      content: "";
-      display: block;
-      width: 100px;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, #ff00ff, #4a00e0, transparent);
-      margin: 20px auto;
-      border-radius: 2px;
     }
 
     .artists {
@@ -105,17 +71,6 @@
       margin-bottom: 40px;
       color: #bbbbff;
       text-shadow: 0 0 10px rgba(187, 187, 255, 0.5);
-      position: relative;
-    }
-
-    .artists span:first-child {
-      color: #ff6ec7;
-      text-shadow: 0 0 10px rgba(255, 110, 199, 0.5);
-    }
-
-    .artists span:last-child {
-      color: #6a8cff;
-      text-shadow: 0 0 10px rgba(106, 140, 255, 0.5);
     }
 
     .release-header {
@@ -143,89 +98,35 @@
 
     .platforms {
       display: flex;
-      justify-content: center;
-      gap: 40px;
+      flex-direction: column;
+      gap: 15px;
       margin-top: 30px;
-      flex-wrap: wrap;
+      width: 100%;
+      max-width: 400px;
     }
 
-    .platform {
+    .platform-row {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      border-left: 4px solid;
     }
+
+    .apple { border-left-color: #ff2d55; }
+    .youtube { border-left-color: #ff0000; }
+    .spotify { border-left-color: #1db954; }
 
     .platform-name {
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
-      font-size: 1.2rem;
-      margin-top: 15px;
+      font-size: 1.4rem;
       text-transform: uppercase;
       letter-spacing: 2px;
       color: #ffffff;
       text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-    }
-
-    .platform-icon {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 
-        0 0 20px rgba(255, 255, 255, 0.2),
-        inset 0 0 10px rgba(0, 0, 0, 0.3);
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-    }
-
-    .platform-icon:hover {
-      transform: scale(1.1);
-    }
-
-    .platform-icon::before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 70%);
-    }
-
-    .apple .platform-icon {
-      background: linear-gradient(135deg, #ff2d55, #ff375f);
-    }
-
-    .youtube .platform-icon {
-      background: linear-gradient(135deg, #ff0000, #e52d27);
-    }
-
-    .spotify .platform-icon {
-      background: linear-gradient(135deg, #1db954, #1ed760);
-    }
-
-    .platform-icon i {
-      font-size: 40px;
-      color: white;
-      filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
-    }
-
-    .pulse {
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-      }
-      70% {
-        box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-      }
     }
 
     .subtext {
@@ -238,75 +139,87 @@
       opacity: 0.7;
     }
 
-    /* Controls Panel */
-    .controls-panel {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(20, 20, 40, 0.8);
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    /* Setup Panel - Inspired by 1000139708.jpg */
+    .setup-panel {
+      flex: 1;
+      min-width: 350px;
+      background: rgba(10, 10, 25, 0.85);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.7),
+        inset 0 0 20px rgba(106, 27, 154, 0.3);
+      backdrop-filter: blur(8px);
       border: 1px solid rgba(106, 27, 154, 0.4);
-      backdrop-filter: blur(5px);
-      z-index: 100;
-      width: 300px;
-      transform: translateX(110%);
-      transition: transform 0.4s ease;
-    }
-
-    .controls-panel.active {
-      transform: translateX(0);
-    }
-
-    .controls-toggle {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(106, 27, 154, 0.7);
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      z-index: 101;
-      box-shadow: 0 0 15px rgba(106, 27, 154, 0.5);
-      font-size: 24px;
+      flex-direction: column;
     }
 
-    .controls-panel h3 {
-      font-family: 'Montserrat', sans-serif;
+    .panel-header {
       text-align: center;
-      margin-bottom: 15px;
-      color: #ffeb3b;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .panel-header h1 {
+      font-size: 2.8rem;
       text-transform: uppercase;
+      letter-spacing: 8px;
+      color: #ffeb3b;
+      text-shadow: 0 0 15px rgba(255, 235, 59, 0.5);
+      margin-bottom: 5px;
+    }
+
+    .panel-header p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      color: #bbbbff;
       letter-spacing: 2px;
-      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+
+    .panel-header::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ff00ff, #4a00e0, transparent);
+      margin: 15px auto;
+      border-radius: 2px;
     }
 
     .control-group {
-      margin-bottom: 15px;
+      margin-bottom: 25px;
     }
 
     .control-group label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
       font-family: 'Montserrat', sans-serif;
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       color: #bbbbff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     .control-group input {
       width: 100%;
-      padding: 8px 12px;
-      border-radius: 5px;
+      padding: 12px 15px;
+      border-radius: 8px;
       border: none;
       background: rgba(255, 255, 255, 0.1);
       color: white;
       font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
       border: 1px solid rgba(106, 27, 154, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .control-group input:focus {
+      outline: none;
+      border-color: #6a1b9a;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px rgba(106, 27, 154, 0.5);
     }
 
     .control-group input::placeholder {
@@ -317,75 +230,73 @@
       background: linear-gradient(135deg, #6a1b9a, #4527a0);
       color: white;
       border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
+      padding: 15px;
+      border-radius: 8px;
       font-family: 'Montserrat', sans-serif;
       font-weight: bold;
+      font-size: 1.2rem;
       cursor: pointer;
       width: 100%;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 3px;
       transition: all 0.3s ease;
+      margin-top: 10px;
+      box-shadow: 0 5px 15px rgba(106, 27, 154, 0.3);
     }
 
     .upload-btn:hover {
       background: linear-gradient(135deg, #7c24b3, #5530c9);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(106, 27, 154, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(106, 27, 154, 0.5);
     }
 
-    /* Audio Player */
-    .audio-container {
-      margin-top: 30px;
-      width: 100%;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    audio {
-      width: 100%;
-      background: rgba(0,0,0,0.3);
-      border-radius: 30px;
-      padding: 5px;
-    }
-
-    audio::-webkit-media-controls-panel {
-      background: rgba(20, 20, 40, 0.8);
-      border-radius: 30px;
-    }
-
-    /* Cover Art */
-    .cover-container {
-      position: relative;
-      width: 250px;
-      height: 250px;
-      margin: 0 auto 30px;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 
-        0 0 30px rgba(106, 27, 154, 0.7),
-        0 0 60px rgba(106, 27, 154, 0.4),
-        inset 0 0 20px rgba(0,0,0,0.5);
-      border: 5px solid rgba(255,255,255,0.1);
-    }
-
-    .cover-art {
+    /* Background effects */
+    .background-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      background: linear-gradient(135deg, #2c1a4d, #1a1a3a);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(106, 27, 154, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(33, 150, 243, 0.15) 0%, transparent 40%);
+      z-index: -1;
     }
 
-    .cover-placeholder {
-      font-size: 4rem;
-      color: rgba(255,255,255,0.1);
+    .vinyl-texture {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%),
+        repeating-radial-gradient(circle, transparent, transparent 2px, rgba(0,0,0,0.1) 3px, rgba(0,0,0,0.1) 4px);
+      z-index: -1;
+    }
+
+    .glow {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: radial-gradient(circle at center, rgba(106, 27, 154, 0.3) 0%, transparent 70%);
+      z-index: -1;
     }
 
     /* Responsive adjustments */
+    @media (max-width: 1100px) {
+      .container {
+        flex-direction: column;
+      }
+      
+      .display-panel, .setup-panel {
+        width: 100%;
+      }
+    }
+
     @media (max-width: 768px) {
       .title {
         font-size: 3.5rem;
@@ -396,30 +307,16 @@
         font-size: 1.8rem;
       }
       
-      .platforms {
-        gap: 20px;
+      .release-header {
+        font-size: 1.5rem;
       }
       
-      .platform-icon {
-        width: 60px;
-        height: 60px;
-      }
-      
-      .platform-icon i {
-        font-size: 30px;
-      }
-      
-      .cover-container {
-        width: 200px;
-        height: 200px;
+      .platform-name {
+        font-size: 1.2rem;
       }
     }
 
     @media (max-width: 480px) {
-      .container {
-        padding: 25px;
-      }
-      
       .title {
         font-size: 2.5rem;
         letter-spacing: 2px;
@@ -435,15 +332,8 @@
         letter-spacing: 3px;
       }
       
-      .platforms {
-        flex-direction: column;
-        align-items: center;
-        gap: 25px;
-      }
-      
-      .controls-panel {
-        width: 90%;
-        right: 5%;
+      .panel-header h1 {
+        font-size: 2rem;
       }
     }
   </style>
@@ -454,109 +344,77 @@
   <div class="vinyl-texture"></div>
   <div class="glow"></div>
   
-  <!-- Controls toggle button -->
-  <div class="controls-toggle" id="controlsToggle">
-    <i class="fas fa-sliders-h"></i>
-  </div>
-  
-  <!-- Controls panel -->
-  <div class="controls-panel" id="controlsPanel">
-    <h3>Music Release Setup</h3>
-    
-    <div class="control-group">
-      <label for="titleInput">Song Title</label>
-      <input type="text" id="titleInput" placeholder="FUNK DE COMPANIA">
-    </div>
-    
-    <div class="control-group">
-      <label for="artistInput">Artist Names</label>
-      <input type="text" id="artistInput" placeholder="TWXNY, INNKCENCE">
-    </div>
-    
-    <div class="control-group">
-      <label for="imageInput">Cover Art</label>
-      <input type="file" id="imageInput" accept="image/*">
-    </div>
-    
-    <div class="control-group">
-      <label for="audioInput">Audio File</label>
-      <input type="file" id="audioInput" accept="audio/*">
-    </div>
-    
-    <button class="upload-btn" onclick="updateDisplay()">Update Release</button>
-  </div>
-  
-  <!-- Main content container -->
   <div class="container">
-    <div class="cover-container">
-      <img id="coverArt" class="cover-art" src="" alt="Cover Art">
-      <div id="coverPlaceholder" class="cover-placeholder">
-        <i class="fas fa-compact-disc"></i>
-      </div>
-    </div>
-    
-    <h1 class="title" id="songTitle">FUNK DE COMPANIA</h1>
-    
-    <div class="artists" id="artistName">
-      <span>TWXNY</span>, <span>INNKCENCE</span>
-    </div>
-    
-    <div class="release-header">NEW MUSIC RELEASES</div>
-    
-    <div class="platforms">
-      <div class="platform apple">
-        <div class="platform-icon pulse">
-          <i class="fab fa-apple"></i>
-        </div>
-        <div class="platform-name">Apple Music</div>
+    <!-- Display Panel - Replica of 1000139706.jpg -->
+    <div class="display-panel">
+      <h1 class="title" id="displayTitle">FUNK DE COMPANIA</h1>
+      
+      <div class="artists" id="displayArtists">
+        <span>TWXNY</span>, <span>INNKCENCE</span>
       </div>
       
-      <div class="platform youtube">
-        <div class="platform-icon">
-          <i class="fab fa-youtube"></i>
+      <div class="release-header">NEW MUSIC RELEASES</div>
+      
+      <div class="platforms">
+        <div class="platform-row apple">
+          <div class="platform-name">Apple Music</div>
         </div>
-        <div class="platform-name">Available on YouTube Music</div>
+        
+        <div class="platform-row youtube">
+          <div class="platform-name">Available on YouTube Music</div>
+        </div>
+        
+        <div class="platform-row spotify">
+          <div class="platform-name">Available on Spotify</div>
+        </div>
       </div>
       
-      <div class="platform spotify">
-        <div class="platform-icon">
-          <i class="fab fa-spotify"></i>
-        </div>
-        <div class="platform-name">Available on Spotify</div>
-      </div>
+      <div class="subtext">OUT NOW ON ALL PLATFORMS</div>
     </div>
     
-    <div class="subtext">OUT NOW ON ALL PLATFORMS</div>
-    
-    <div class="audio-container">
-      <audio id="audio" controls></audio>
+    <!-- Setup Panel - Inspired by 1000139708.jpg -->
+    <div class="setup-panel">
+      <div class="panel-header">
+        <h1>MUSIC RELEASE</h1>
+        <p>SETUP YOUR MUSIC RELEASE</p>
+      </div>
+      
+      <div class="control-group">
+        <label for="titleInput">Song Title</label>
+        <input type="text" id="titleInput" placeholder="FUNK DE COMPANIA" value="FUNK DE COMPANIA">
+      </div>
+      
+      <div class="control-group">
+        <label for="artistInput">Artist Names</label>
+        <input type="text" id="artistInput" placeholder="TWXNY, INNKCENCE" value="TWXNY, INNKCENCE">
+      </div>
+      
+      <div class="control-group">
+        <label for="imageInput">Cover Art (Optional)</label>
+        <input type="file" id="imageInput" accept="image/*">
+      </div>
+      
+      <div class="control-group">
+        <label for="audioInput">Audio File (Optional)</label>
+        <input type="file" id="audioInput" accept="audio/*">
+      </div>
+      
+      <button class="upload-btn" onclick="updateDisplay()">UPDATE RELEASE</button>
     </div>
   </div>
 
   <script>
     // DOM Elements
-    const controlsToggle = document.getElementById('controlsToggle');
-    const controlsPanel = document.getElementById('controlsPanel');
     const titleInput = document.getElementById('titleInput');
     const artistInput = document.getElementById('artistInput');
-    const imageInput = document.getElementById('imageInput');
-    const audioInput = document.getElementById('audioInput');
-    const songTitle = document.getElementById('songTitle');
-    const artistName = document.getElementById('artistName');
-    const coverArt = document.getElementById('coverArt');
-    const coverPlaceholder = document.getElementById('coverPlaceholder');
-    const audio = document.getElementById('audio');
-    
-    // Toggle controls panel
-    controlsToggle.addEventListener('click', () => {
-      controlsPanel.classList.toggle('active');
-    });
+    const displayTitle = document.getElementById('displayTitle');
+    const displayArtists = document.getElementById('displayArtists');
     
     // Update display with user inputs
     function updateDisplay() {
       // Update song title
       if (titleInput.value) {
-        songTitle.innerText = titleInput.value.toUpperCase();
+        displayTitle.innerText = titleInput.value.toUpperCase();
       }
       
       // Update artist names
@@ -570,42 +428,35 @@
           artistHTML += `<span>${artist}</span>`;
         });
         
-        artistName.innerHTML = artistHTML;
+        displayArtists.innerHTML = artistHTML;
       }
       
-      // Update cover art
-      if (imageInput.files && imageInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          coverArt.src = e.target.result;
-          coverArt.style.display = 'block';
-          coverPlaceholder.style.display = 'none';
-        }
-        reader.readAsDataURL(imageInput.files[0]);
-      }
-      
-      // Update audio player
-      if (audioInput.files && audioInput.files[0]) {
-        const audioURL = URL.createObjectURL(audioInput.files[0]);
-        audio.src = audioURL;
-      }
-      
-      // Close the panel after updating
-      controlsPanel.classList.remove('active');
+      // Show confirmation
+      alert("Release updated successfully!");
     }
     
     // Initialize with default values
     window.onload = function() {
-      // Add subtle hover effects to platform icons
-      const icons = document.querySelectorAll('.platform-icon');
-      icons.forEach(icon => {
-        icon.addEventListener('mouseenter', () => {
-          icon.style.transform = 'scale(1.1)';
-        });
-        
-        icon.addEventListener('mouseleave', () => {
-          icon.style.transform = 'scale(1)';
-        });
+      // Add real-time updating for text fields
+      titleInput.addEventListener('input', function() {
+        if (titleInput.value) {
+          displayTitle.innerText = titleInput.value.toUpperCase();
+        }
+      });
+      
+      artistInput.addEventListener('input', function() {
+        if (artistInput.value) {
+          const artists = artistInput.value.split(',');
+          let artistHTML = '';
+          
+          artists.forEach((artist, index) => {
+            artist = artist.trim();
+            if (index > 0) artistHTML += ', ';
+            artistHTML += `<span>${artist}</span>`;
+          });
+          
+          displayArtists.innerHTML = artistHTML;
+        }
       });
     };
   </script>
